@@ -51,19 +51,14 @@ class Testing_ObjectStore:
     @staticmethod
     def create_bucket(bucket, bucket_name):
         """Create and return a new bucket in the object store called
-           'bucket_name'. This will raise an
-           ObjectStoreError if this bucket already exists
+           'bucket_name'.
         """
         bucket_name = str(bucket_name)
 
         full_name = _os.path.join(_os.path.split(bucket)[0], bucket_name)
-
-        if _os.path.exists(full_name):
-            from Acquire.ObjectStore import ObjectStoreError
-            raise ObjectStoreError(
-                "CANNOT CREATE NEW BUCKET '%s': EXISTS!" % bucket_name)
-
-        _os.makedirs(full_name)
+ 
+        if not _os.path.exists(full_name):
+            _os.makedirs(full_name)
 
         return full_name
 
